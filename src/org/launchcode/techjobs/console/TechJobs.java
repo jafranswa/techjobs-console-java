@@ -2,6 +2,7 @@ package org.launchcode.techjobs.console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -61,7 +62,12 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+
+
+
+                        printJobs(JobData.findByValue(searchTerm));
+                        //System.out.println("Search all fields not yet implemented.");
+
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -109,8 +115,27 @@ public class TechJobs {
     }
 
     // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+    private static String printJobs(ArrayList<HashMap<String, String>> someJobs) {
 
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.size() < 1) {
+            System.out.println("no results to display");
+        }
+        String astrics = "*****";
+        String rowDataName = "";
+        for(HashMap<String, String> job: someJobs) {
+
+            for (Map.Entry<String, String> rowData : job.entrySet()) {
+                rowDataName = rowData.getKey();
+                if (rowDataName.equals("position type")) {
+                    System.out.println(astrics);
+                }
+                System.out.println(rowData.getKey() + " : " + rowData.getValue());
+
+                if (rowDataName.equals("core competency")) {
+                    System.out.println(astrics);
+                }
+            }
+        }
+        return astrics;
     }
 }
